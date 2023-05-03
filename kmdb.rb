@@ -82,9 +82,7 @@ Role.destroy_all
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
-# Batman Begins          2005           PG-13  Warner Bros.
-# The Dark Knight        2008           PG-13  Warner Bros.
-# The Dark Knight Rises  2012           PG-13  Warner Bros.
+
 new_studio = Studio.new
 new_studio["name"] = "Warner Bros."
 new_studio.save
@@ -204,7 +202,7 @@ role6.save
 role7 = Role.new
 role7["movie_id"] = movie2["id"]
 role7["actor_id"] = actor6["id"]
-role7["character_name"] = "Heath Ledger"
+role7["character_name"] = "Joker"
 role7.save
 
 role8 = Role.new
@@ -265,7 +263,16 @@ puts ""
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
 
+movies_all = Movie.all
 
+for movies_all in Movie.all
+    title = movies_all["title"]
+    year_released = movies_all["year_released"]
+    rated = movies_all["rated"]
+    studio = Studio.find_by({"id" => movies_all["studio_id"]})
+    studio_name = studio["name"]
+    puts "#{title} #{year_released} #{rated} #{studio_name}"
+end
 
 # Prints a header for the cast output
 puts ""
@@ -275,3 +282,15 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
+
+roles_all = Role.all
+
+for roles_all in Role.all
+    movie = Movie.find_by({"id" => roles_all["movie_id"]})
+    movie_name = movie["title"]
+    actor = Actor.find_by({"id" => roles_all["actor_id"]})
+    actor_firstlastname = actor["name"]
+    character = roles_all["character_name"]
+    puts "#{movie_name} #{actor_firstlastname} #{character}"
+end
+
